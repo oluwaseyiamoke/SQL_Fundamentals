@@ -1,0 +1,105 @@
+# SQL Basics
+
+This repository provides an introduction to basic SQL concepts, including SELECT statements, filtering data, and using operators for data retrieval. The examples use an `Orders` table to demonstrate various SQL queries.
+
+## Table of Contents
+- [SELECT Statements](#select-statements)
+- [Filtering Data with WHERE](#filtering-data-with-where)
+- [Using IN, AND, and LIKE Operators](#using-in-and-like-operators)
+- [Advanced SQL Queries](#advanced-sql-queries)
+- [Example Dataset](#example-dataset)
+- [How to Use](#how-to-use)
+
+## SELECT Statements
+
+### 1. Selecting All Columns
+```sql
+SELECT * FROM Orders;
+```
+
+### 2. Selecting Specific Columns
+```sql
+SELECT Product FROM Orders;
+SELECT Product, Quantity_Ordered, Price_Each FROM Orders;
+```
+
+### 3. Limiting the Number of Rows
+```sql
+SELECT TOP 5 Product, Quantity_Ordered, Price_Each FROM Orders;
+```
+
+### 4. Using Aliases
+```sql
+SELECT Product AS Item, Quantity_Ordered AS Quantity, Price_Each AS Price FROM Orders;
+```
+
+### 5. Selecting Distinct Values
+```sql
+SELECT DISTINCT Purchase_Address FROM Orders;
+SELECT DISTINCT Product, Order_Date FROM Orders;
+```
+
+## Filtering Data with WHERE
+
+### 1. Using Comparison Operators
+```sql
+SELECT * FROM Orders WHERE Product = 'USB-C Charging Cable';
+SELECT * FROM Orders WHERE Product <> 'USB-C Charging Cable';
+SELECT * FROM Orders WHERE Quantity_Ordered > 2;
+SELECT * FROM Orders WHERE Price_Each < 100;
+SELECT * FROM Orders WHERE Quantity_Ordered >= 5;
+SELECT * FROM Orders WHERE Price_Each <= 50;
+SELECT * FROM Orders WHERE Order_Date BETWEEN '2019-08-28' AND '2019-11-09';
+```
+
+## Using IN, AND, and LIKE Operators
+
+### 1. Using `IN`
+```sql
+SELECT * FROM Orders WHERE Product IN ('Wired Headphones', 'USB-C Charging Cable');
+```
+
+### 2. Using `AND`
+```sql
+SELECT * FROM Orders WHERE Product = 'USB-C Charging Cable' AND Quantity_Ordered > 2;
+```
+
+### 3. Using `LIKE` for Pattern Matching
+```sql
+SELECT * FROM Orders WHERE Product LIKE 'Wired%'; -- Matches any product starting with 'Wired'
+SELECT * FROM Orders WHERE Product LIKE '_a%'; -- Second character is 'a'
+SELECT * FROM Orders WHERE Product LIKE '__h___'; -- Third character is 'h' and length is 5
+SELECT * FROM Orders WHERE Product LIKE 'Go_________e'; -- Matches a specific pattern with 'G' and 'e'
+```
+
+## Advanced SQL Queries
+
+### 1. Using `JOIN` to Combine Data from Multiple Tables
+```sql
+SELECT Orders.Order_ID, Orders.Product, Customers.Customer_Name 
+FROM Orders
+JOIN Customers ON Orders.Customer_ID = Customers.Customer_ID;
+```
+
+### 2. Grouping Data with `GROUP BY`
+```sql
+SELECT Product, SUM(Quantity_Ordered) AS Total_Quantity
+FROM Orders
+GROUP BY Product;
+```
+
+### 3. Filtering Groups with `HAVING`
+```sql
+SELECT Product, SUM(Quantity_Ordered) AS Total_Quantity
+FROM Orders
+GROUP BY Product
+HAVING SUM(Quantity_Ordered) > 50;
+```
+
+### 4. Ordering Data with `ORDER BY`
+```sql
+SELECT Product, Price_Each
+FROM Orders
+ORDER BY Price_Each DESC;
+```
+
